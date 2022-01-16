@@ -1,3 +1,84 @@
+// Function to Encode the string using Mathematical Operations
+function encoding() {
+	var key = parseInt(document.getElementById("key").value)
+	var text = document.getElementById("plain").value
+	
+	// Initialize the ciphertext
+	var cipher = ""
+	for(let i = 0; i < text.length; i++) {
+		// If current character is a space then simply add it.
+		if(text[i] == " ") cipher += " ";
+		else {
+			// Get the ASCII value of current character
+			var ch = text[i].charCodeAt(0) + key, curr_ch = text[i].charCodeAt(0);
+			
+			// If current character is Lowercase Alphabet
+			if(text[i] >= 'a' && text[i] <= 'z') {
+				// If the ASCII value exceeds the z then, we have to run the cycle of a to z again by subtract 26,
+				// otherwise add the key and get character from ASCII and add to cipher
+				if(ch > 122) {
+					cipher += String.fromCharCode(key + curr_ch - 26);
+				} else {
+					cipher += String.fromCharCode(ch)
+				}
+			} else {
+				// If current character is Uppercase Alphabet
+				
+				// If the ASCII value exceeds the Z then, we have to run the cycle of A to Z again by subtract 26,
+				// otherwise add the key and get character from ASCII and add to cipher
+				if(ch > 90) {
+					cipher += String.fromCharCode(key + curr_ch - 26);
+				} else {
+					cipher += String.fromCharCode(ch)
+				}
+			}
+		}
+	}
+	
+	// Display the Cipher in screen
+	document.getElementById("cipher").value = cipher
+}
+
+// Function to Decode the string using Mathematical Operations
+function decoding() {
+	var key = parseInt(document.getElementById("key").value)
+	var cipher_text = document.getElementById("cipher").value
+	
+	// Initialize the plaintext
+	var plain = ""
+	for(let i = 0; i < cipher_text.length; i++) {
+		// If current character is a space then simply add it.
+		if(cipher_text[i] == " ") plain += " ";
+		else {
+			// Get the ASCII value of current character
+			var ch = cipher_text[i].charCodeAt(0) - key, curr_ch = cipher_text[i].charCodeAt(0);
+			
+			// If current character is Lowercase Alphabet
+			if(cipher_text[i] >= 'a' && cipher_text[i] <= 'z') {
+				// If the ASCII value less than a then, we have to run the cycle of z to a again by adding 26,
+				// otherwise subtract the key and get character from ASCII and add to cipher
+				if(ch < 97) {
+					plain += String.fromCharCode(curr_ch - key + 26);
+				} else {
+					plain += String.fromCharCode(ch)
+				}
+			} else {
+				// If current character is Uppercase Alphabet
+
+				// If the ASCII value less than A then, we have to run the cycle of Z to A again by adding 26,
+				// otherwise subtract the key and get character from ASCII and add to cipher
+				if(ch < 65) {
+					plain += String.fromCharCode(curr_ch - key + 26);
+				} else {
+					plain += String.fromCharCode(ch)
+				}
+			}
+		}
+	}
+
+	document.getElementById("plain").value = plain
+}
+
 // Function to change button which swaps
 // Ciphertext to plaintext
 // plaintext to ciphertext 
@@ -45,63 +126,4 @@ function onChangeKey() {
 	} else {
 		encoding()
 	}
-}
-
-// Function to Encode the string using Mathematical Operations
-function encoding() {
-	var key = parseInt(document.getElementById("key").value)
-	var text = document.getElementById("plain").value
-
-	var cipher = ""
-	for(let i = 0; i < text.length; i++) {
-		if(text[i] == " ") cipher += " ";
-		else {
-			var ch = text[i].charCodeAt(0) + key, curr_ch = text[i].charCodeAt(0);
-			if(text[i] >= 'a' && text[i] <= 'z') {
-				if(ch > 122) {
-					cipher += String.fromCharCode(key + curr_ch - 26);
-				} else {
-					cipher += String.fromCharCode(ch)
-				}
-			} else {
-				if(ch > 90) {
-					cipher += String.fromCharCode(key + curr_ch - 26);
-				} else {
-					cipher += String.fromCharCode(ch)
-				}
-			}
-		}
-	}
-
-	document.getElementById("cipher").value = cipher
-}
-
-// Function to Decode the string using Mathematical Operations
-function decoding() {
-	var key = parseInt(document.getElementById("key").value)
-	var cipher_text = document.getElementById("cipher").value
-
-	var plain = ""
-	for(let i = 0; i < cipher_text.length; i++) {
-		if(cipher_text[i] == " ") plain += " ";
-		else {
-			var ch = cipher_text[i].charCodeAt(0) - key, curr_ch = cipher_text[i].charCodeAt(0);
-			console.log(curr_ch, key)
-			if(cipher_text[i] >= 'a' && cipher_text[i] <= 'z') {
-				if(ch < 97) {
-					plain += String.fromCharCode(curr_ch - key + 26);
-				} else {
-					plain += String.fromCharCode(ch)
-				}
-			} else {
-				if(ch < 65) {
-					plain += String.fromCharCode(curr_ch - key + 26);
-				} else {
-					plain += String.fromCharCode(ch)
-				}
-			}
-		}
-	}
-
-	document.getElementById("plain").value = plain
 }
