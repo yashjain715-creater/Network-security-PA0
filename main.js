@@ -1,3 +1,59 @@
+// Function to Encode the string using Mathematical Operations
+function encoding() {
+	var text = document.getElementById("plain").value
+	
+	// Initialize the ciphertext
+	let cipher = ""
+	for(let i = 0; i < text.length; i++) {
+		// If current character is a space then simply add it.
+		if(text[i] == " ") cipher += " ";
+		else {
+			// If current character is Lowercase Alphabet
+			if(text[i] >= 'a' && text[i] <= 'z') {
+	            // the function will act as a linear mapping between ascii values
+	            // such as a(97) -> z(122) and z(122) -> a(97)
+				cipher += String.fromCharCode(219 - text.charCodeAt(i));
+			} else {
+				// If current character is Uppercase Alphabet
+				
+	            // the function will act as a linear mapping between ascii values
+	            // such as A(65) -> Z(90) and Z(90) -> A(65)
+				cipher += String.fromCharCode(155 - text.charCodeAt(i));
+			}
+		}
+	}
+	// Display the Cipher in screen
+	document.getElementById("cipher").value = cipher
+}
+
+// Function to Decode the string using Mathematical Operations
+function decoding() {
+	var cipher_text = document.getElementById("cipher").value
+	
+	// Initialize the plaintext
+	var plain = ""
+	for(let i = 0; i < cipher_text.length; i++) {
+		// If current character is a space then simply add it.
+		if(cipher_text[i] == " ") plain += " ";
+		else {
+			// If current character is Lowercase Alphabet
+			if(cipher_text[i] >= 'a' && cipher_text[i] <= 'z') {
+				// the function will act as a linear mapping between ascii values
+	            // such as a(97) -> z(122) and z(122) -> a(97)
+				plain += String.fromCharCode(219 - cipher_text.charCodeAt(i));
+			} else {
+				// If current character is Uppercase Alphabet
+
+				// the function will act as a linear mapping between ascii values
+	            // such as A(65) -> Z(90) and Z(90) -> A(65)
+				plain += String.fromCharCode(155 - cipher_text.charCodeAt(i));
+			}
+		}
+	}
+
+	document.getElementById("plain").value = plain
+}
+
 // Function to change button which swaps
 // Ciphertext to plaintext
 // plaintext to ciphertext 
@@ -34,74 +90,4 @@ function lettersValidate(key) {
     } else {
 		return false;
     }       
-}
-
-// Function to handle when Key changes
-function onChangeKey() {
-	var btn1 = document.getElementById('plain_to_cipher')
-	var btn2 = document.getElementById('cipher_to_plain')
-	if(btn1.style.color == '#000') {
-		decoding()
-	} else {
-		encoding()
-	}
-}
-
-// Function to Encode the string using Mathematical Operations
-function encoding() {
-	var key = parseInt(document.getElementById("key").value)
-	var text = document.getElementById("plain").value
-
-	var cipher = ""
-	for(let i = 0; i < text.length; i++) {
-		if(text[i] == " ") cipher += " ";
-		else {
-			var ch = text[i].charCodeAt(0) + key, curr_ch = text[i].charCodeAt(0);
-			if(text[i] >= 'a' && text[i] <= 'z') {
-				if(ch > 122) {
-					cipher += String.fromCharCode(key + curr_ch - 26);
-				} else {
-					cipher += String.fromCharCode(ch)
-				}
-			} else {
-				if(ch > 90) {
-					cipher += String.fromCharCode(key + curr_ch - 26);
-				} else {
-					cipher += String.fromCharCode(ch)
-				}
-			}
-		}
-	}
-
-	document.getElementById("cipher").value = cipher
-}
-
-// Function to Decode the string using Mathematical Operations
-function decoding() {
-	var key = parseInt(document.getElementById("key").value)
-	var cipher_text = document.getElementById("cipher").value
-
-	var plain = ""
-	for(let i = 0; i < cipher_text.length; i++) {
-		if(cipher_text[i] == " ") plain += " ";
-		else {
-			var ch = cipher_text[i].charCodeAt(0) - key, curr_ch = cipher_text[i].charCodeAt(0);
-			console.log(curr_ch, key)
-			if(cipher_text[i] >= 'a' && cipher_text[i] <= 'z') {
-				if(ch < 97) {
-					plain += String.fromCharCode(curr_ch - key + 26);
-				} else {
-					plain += String.fromCharCode(ch)
-				}
-			} else {
-				if(ch < 65) {
-					plain += String.fromCharCode(curr_ch - key + 26);
-				} else {
-					plain += String.fromCharCode(ch)
-				}
-			}
-		}
-	}
-
-	document.getElementById("plain").value = plain
 }
